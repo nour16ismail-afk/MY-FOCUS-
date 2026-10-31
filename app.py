@@ -1,12 +1,11 @@
-from flask import Flask, render_template
-from flask import send_from_directory
+from flask import Flask, send_from_directory
 import os
 
-app = Flask(**name**, template_folder=".")
+app = Flask(**name**)
 
 @app.route("/")
 def home():
-return render_template("index.html")
+return send_from_directory(".", "index.html")
 
 @app.route("/style.css")
 def style():
