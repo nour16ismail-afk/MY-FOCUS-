@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MY FOCUS</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="app-header">
+        <div class="header-art" aria-hidden="true">
+            <svg viewBox="0 0 180 120" role="img">
+                <circle cx="90" cy="60" r="43" class="art-ring ring-one"/>
+                <circle cx="90" cy="60" r="29" class="art-ring ring-two"/>
+                <circle cx="90" cy="60" r="14" class="art-core"/>
+                <path d="M90 8 V25 M90 95 V112 M38 60 H55 M125 60 H142" class="art-line"/>
+                <path d="M90 60 L124 29" class="art-line art-pointer"/>
+                <circle cx="124" cy="29" r="4" class="art-dot"/>
+            </svg>
+        </div>
+        <h1>MY FOCUS</h1>
+        <p>نظّم وقتك، وركّز على هدفك.</p>
+        <span class="header-status"><i></i> YOUR DAILY WORKSPACE</span>
+    </header>
+
+    <main>
+
+        <!-- الترحيب بالمستخدم -->
+        <section class="welcome-section">
+
+            <h2 id="welcome-title">أهلاً بك في MY FOCUS</h2>
+
+            <p>ابدأ يومك بخطوة صغيرة نحو هدفك.</p>
+
+            <div class="profile-form">
+
+                <input
+                    type="text"
+                    id="user-name"
+                    placeholder="اكتب اسمك هنا"
+                >
+
+                <button onclick="saveName()">حفظ الاسم</button>
+
+            </div>
+
+        </section>
+
+
+        <!-- بطاقات اليوم -->
+        <section class="cards-section">
+
+            <div class="card">
+                <div class="card-art" aria-hidden="true">
+                    <svg viewBox="0 0 64 64">
+                        <path d="M14 9h25l11 11v35H14z" class="icon-outline"/>
+                        <path d="M39 9v12h11M22 31h20M22 39h20M22 47h13" class="icon-line"/>
+                        <path d="M20 17h12" class="icon-line"/>
+                    </svg>
+                </div>
+                <h3>المذاكرة</h3>
+                <p>ابدأ بما تحتاج إلى إنجازه اليوم.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-art" aria-hidden="true">
+                    <svg viewBox="0 0 64 64">
+                        <path d="M49 24A19 19 0 0 0 16 17l-4 6" class="icon-line"/>
+                        <path d="M12 13v10h10M15 40a19 19 0 0 0 33 7l4-6" class="icon-line"/>
+                        <path d="M52 51V41H42" class="icon-line"/>
+                        <path d="M25 32l5 5 10-12" class="icon-line"/>
+                    </svg>
+                </div>
+                <h3>المراجعة</h3>
+                <p>راجع ما تعلمته وثبّت معلوماتك.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-art" aria-hidden="true">
+                    <svg viewBox="0 0 64 64">
+                        <circle cx="32" cy="32" r="23" class="icon-outline"/>
+                        <circle cx="32" cy="32" r="14" class="icon-line"/>
+                        <circle cx="32" cy="32" r="5" class="icon-fill"/>
+                        <path d="M35 29L51 13" class="icon-line"/>
+                        <path d="M42 13h9v9" class="icon-line"/>
+                    </svg>
+                </div>
+                <h3>أهدافك</h3>
+                <p>كل إنجاز صغير يقربك من هدفك.</p>
+            </div>
+
+        </section>
+
+
+        <!-- مؤقت التركيز -->
+        <section class="focus-section">
+
+            <h2>وقت التركيز ⏱️</h2>
+
+            <div class="timer-card">
+
+                <div class="timer-art" aria-hidden="true">
+                    <svg viewBox="0 0 100 76">
+                        <circle cx="50" cy="42" r="27" class="timer-art-ring"/>
+                        <path d="M50 42V24 M50 42L64 49" class="timer-art-hand"/>
+                        <path d="M40 8h20M50 8v7" class="timer-art-hand"/>
+                        <path d="M16 20l7 6M84 20l-7 6" class="timer-art-small"/>
+                    </svg>
+                </div>
+
+                <p id="timer-mode">وقت التركيز</p>
+
+                <div id="timer-display">25:00</div>
+
+                <div class="timer-settings">
+
+                    <label for="study-minutes">
+                        مدة التركيز بالدقائق
+                    </label>
+
+                    <input
+                        type="number"
+                        id="study-minutes"
+                        min="1"
+                        max="180"
+                        value="25"
+                    >
+
+                    <label for="break-minutes">
+                        مدة الاستراحة بالدقائق
+                    </label>
+
+                    <input
+                        type="number"
+                        id="break-minutes"
+                        min="1"
+                        max="60"
+                        value="5"
+                    >
+
+                    <button onclick="setTimer()">
+                        تأكيد الوقت
+                    </button>
+
+                </div>
+
+                <div class="timer-buttons">
+
+                    <button onclick="startTimer()">ابدأ</button>
+
+                    <button onclick="pauseTimer()">
+                        إيقاف مؤقت
+                    </button>
+
+                    <button onclick="resetTimer()">
+                        إعادة ضبط
+                    </button>
+
+                </div>
+
+                <div class="sound-settings">
+                    <label>
+                        <input type="checkbox" id="sound-enabled" checked>
+                        تفعيل التنبيه الصوتي 🔔
+                    </label>
+                    <button type="button" onclick="testNotificationSound()">تجربة الصوت</button>
+                </div>
+
+                <p class="timer-message">
+                    ركّز في هدفك، وكل دقيقة بتفرق!
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- المهام اليومية -->
+        <section class="my-tasks">
+
+            <h2><span class="heading-mark" aria-hidden="true">✓</span> مهامي اليومية</h2>
+
+            <div class="task-form">
+
+                <input
+                    type="text"
+                    id="task-input"
+                    placeholder="اكتب المهمة التي تريد إنجازها"
+                >
+
+                <button onclick="addTask()">إضافة مهمة</button>
+
+            </div>
+
+            <ul id="task-list"></ul>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>MY FOCUS | خطوة كل يوم تصنع فرقاً.</p>
+    </footer>
+
+
+    <script>
+
+        // الاسم الشخصي
+
+        function saveName() {
+
+            const name = document
+                .getElementById("user-name")
+                .value.trim();
+
+            if (name === "") {
+                alert("من فضلك اكتب اسمك أولاً");
+                return;
+            }
+
+            localStorage.setItem("userName", name);
+
+            document.getElementById("welcome-title").textContent =
+                "أهلاً بك يا " + name + " 👋";
+        }
+
+
+        // تحميل البيانات عند فتح الصفحة
+
+        window.onload = function () {
+
+            const savedName = localStorage.getItem("userName");
+
+            if (savedName) {
+
+                document.getElementById("welcome-title").textContent =
+                    "أهلاً بك يا " + savedName + " 👋";
+
+                document.getElementById("user-name").value = savedName;
+            }
+
+            displayTasks();
+            updateTimerDisplay();
+        };
+
+
+        // إدارة المهام
+
+        let tasks = JSON.parse(
+            localStorage.getItem("myTasks")
+        ) || [];
+
+
+        function saveTasks() {
+
+            localStorage.setItem(
+                "myTasks",
+                JSON.stringify(tasks)
+            );
+
+        }
+
+
+        function addTask() {
+
+            const input = document.getElementById("task-input");
+
+            const taskText = input.value.trim();
+
+            if (taskText === "") {
+                alert("اكتب المهمة أولاً");
+                return;
+            }
+
+            tasks.push({
+                text: taskText,
+                completed: false
+            });
+
+            input.value = "";
+
+            saveTasks();
+            displayTasks();
+
+        }
+
+
+        function displayTasks() {
+
+            const taskList = document.getElementById("task-list");
+
+            taskList.innerHTML = "";
+
+            tasks.forEach(function (task, index) {
+
+                const li = document.createElement("li");
+
+                const taskName = document.createElement("span");
+
+                taskName.textContent = task.text;
+
+                if (task.completed) {
+
+                    taskName.classList.add("completed");
+
+                }
+
+                taskName.onclick = function () {
+
+                    toggleTask(index);
+
+                };
+
+
+                const deleteButton = document.createElement("button");
+
+                deleteButton.textContent = "حذف";
+
+                deleteButton.onclick = function () {
+
+                    deleteTask(index);
+
+                };
+
+
+                li.appendChild(taskName);
+
+                li.appendChild(deleteButton);
+
+                taskList.appendChild(li);
+
+            });
+
+        }
+
+
+        function toggleTask(index) {
+
+            tasks[index].completed = !tasks[index].completed;
+
+            saveTasks();
+            displayTasks();
+
+        }
+
+
+        function deleteTask(index) {
+
+            tasks.splice(index, 1);
+
+            saveTasks();
+            displayTasks();
+
+        }
+
+
+        // صوت التنبيه عند انتهاء المؤقت
+        let audioContext = null;
+
+        function playNotificationSound() {
+            const soundToggle = document.getElementById("sound-enabled");
+            if (!soundToggle || !soundToggle.checked) return;
+
+            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContextClass) {
+                alert("المتصفح لا يدعم تشغيل التنبيه الصوتي.");
+                return;
+            }
+
+            if (!audioContext) audioContext = new AudioContextClass();
+
+            audioContext.resume().then(function () {
+                const notes = [880, 1174, 880];
+                notes.forEach(function (frequency, index) {
+                    const oscillator = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    const startAt = audioContext.currentTime + index * 0.22;
+
+                    oscillator.type = "sine";
+                    oscillator.frequency.setValueAtTime(frequency, startAt);
+                    gain.gain.setValueAtTime(0.0001, startAt);
+                    gain.gain.exponentialRampToValueAtTime(0.18, startAt + 0.03);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, startAt + 0.18);
+
+                    oscillator.connect(gain);
+                    gain.connect(audioContext.destination);
+                    oscillator.start(startAt);
+                    oscillator.stop(startAt + 0.2);
+                });
+            }).catch(function () {
+                console.log("تعذر تشغيل صوت التنبيه.");
+            });
+        }
+
+        function testNotificationSound() {
+            playNotificationSound();
+        }
+
+
+        // مؤقت التركيز والاستراحة
+
+        let remainingSeconds = 25 * 60;
+
+        let timerInterval = null;
+
+        let studyDuration = 25;
+
+        let breakDuration = 5;
+
+        let currentMode = "study";
+
+
+        function updateTimerDisplay() {
+
+            const minutes = Math.floor(remainingSeconds / 60);
+
+            const seconds = remainingSeconds % 60;
+
+            const formattedTime =
+                String(minutes).padStart(2, "0") + ":" +
+                String(seconds).padStart(2, "0");
+
+            document.getElementById("timer-display").textContent =
+                formattedTime;
+
+        }
+
+
+        function setTimer() {
+
+            const studyInput = Number(
+                document.getElementById("study-minutes").value
+            );
+
+            const breakInput = Number(
+                document.getElementById("break-minutes").value
+            );
+
+
+            if (
+                !Number.isInteger(studyInput) ||
+                studyInput < 1 ||
+                studyInput > 180
+            ) {
+
+                alert("مدة التركيز يجب أن تكون من دقيقة إلى 180 دقيقة");
+
+                return;
+
+            }
+
+
+            if (
+                !Number.isInteger(breakInput) ||
+                breakInput < 1 ||
+                breakInput > 60
+            ) {
+
+                alert("مدة الاستراحة يجب أن تكون من دقيقة إلى 60 دقيقة");
+
+                return;
+
+            }
+
+
+            pauseTimer();
+
+            studyDuration = studyInput;
+
+            breakDuration = breakInput;
+
+            currentMode = "study";
+
+            remainingSeconds = studyDuration * 60;
+
+
+            document.getElementById("timer-mode").textContent =
+                "وقت التركيز";
+
+            updateTimerDisplay();
+
+            alert("تم ضبط وقت التركيز والاستراحة بنجاح!");
+
+        }
+
+
+        function startTimer() {
+
+            if (timerInterval !== null) {
+                return;
+            }
+
+
+            timerInterval = setInterval(function () {
+
+                if (remainingSeconds > 0) {
+
+                    remainingSeconds--;
+
+                    updateTimerDisplay();
+
+                } else {
+
+                    pauseTimer();
+                    playNotificationSound();
+if (currentMode === "study") {
+
+    showTimerNotification(
+        "انتهى وقت التركيز",
+        "أحسنتِ! حان وقت الاستراحة 🎉"
+    );
+
+                        currentMode = "break";
+
+                        remainingSeconds = breakDuration * 60;
+
+                        document.getElementById("timer-mode").textContent =
+                            "وقت الاستراحة ☕";
+
+                        updateTimerDisplay();
+
+                       function showTimerNotification(title, message) {
+    const notificationArea = document.getElementById("timer-mode");
+
+    notificationArea.textContent = title + " 🔔";
+
+    // تشغيل النغمة فورًا
+    playNotificationSound();
+
+    // إظهار إشعار المتصفح إذا كان مسموحًا
+    if ("Notification" in window && Notification.permission === "granted") {
+        new Notification(title, {
+            body: message
+        });
+    }
+}
+                        startTimer();
+
+                    } else {
+
+                       showTimerNotification(
+    "انتهت الاستراحة",
+    "مستعد لجولة تركيز جديدة؟ 💪"
+);
+                        currentMode = "study";
+
+                        remainingSeconds = studyDuration * 60;
+
+                        document.getElementById("timer-mode").textContent =
+                            "وقت التركيز";
+
+                        updateTimerDisplay();
+
+                    }
+
+                }
+
+            }, 1000);
+
+        }
+
+
+        function pauseTimer() {
+
+            clearInterval(timerInterval);
+
+            timerInterval = null;
+
+        }
+
+
+        function resetTimer() {
+
+            pauseTimer();
+
+            currentMode = "study";
+
+            remainingSeconds = studyDuration * 60;
+
+            document.getElementById("timer-mode").textContent =
+                "وقت التركيز";
+
+            updateTimerDisplay();
+
+        }
+
+    </script>
+
+</body>
+</html>
